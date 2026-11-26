@@ -27383,11 +27383,58 @@ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded'
     h+='</ol>';
   })();
   h+='<div class="rel-mun">5. Conclusão</div>';
-  if(POS.AI&&POS.EM&&RIT.AI&&RIT.EM){
-    h+='<p '+P+'>O IDEB 2025 mostra um Estado em melhora real, mas desigual entre as etapas. Para ler o resultado corretamente é preciso separar duas perguntas que costumam ser confundidas: <b>quanto o Amapá melhorou</b> desde a última divulgação e <b>onde ele está</b> em relação às demais unidades da federação. A primeira mede o ritmo; a segunda, o patamar. Um Estado pode avançar depressa e ainda assim ocupar posição ruim, porque partiu de muito atrás; e pode ocupar posição estável justamente por avançar no mesmo passo dos outros, sem se aproximar de ninguém.</p>';
-    h+='<p '+P+'><b>Nos anos iniciais, o ritmo é bom e a aproximação começou.</b> A nota subiu '+pontos(RIT.AI.delta)+' desde 2023, avanço superado por '+(RIT.AI.mais===1? 'apenas uma' : (RIT.AI.mais===0? 'nenhuma' : extF(RIT.AI.mais)))+' das '+extF(RIT.AI.total)+' demais unidades da federação, '+(RIT.AI.mais===0? 'o maior do país' : (RIT.AI.mais===1? 'o segundo maior do país' : 'entre os mais altos do país'))+'. A posição, '+POS.AI.pos+'ª, ainda é ruim, mas ela descreve de onde o Estado partiu, não para onde está indo: mantida essa velocidade, a distância para a média nacional diminui a cada ciclo.</p>';
-    h+='<p '+P+'><b>No ensino médio, ocorre o contrário.</b> A nota subiu '+pontos(RIT.EM.delta)+', avanço superado por '+extF(RIT.EM.mais)+' unidades. É um ritmo que não reduz distância alguma: serve apenas para conservar a '+POS.EM.pos+'ª posição. Aqui o atraso deixou de ser herança do passado e passou a se reproduzir a cada ciclo, e esta é, justamente, a etapa de responsabilidade direta da rede estadual.</p>';
-    h+='<p '+P+'>A conclusão, portanto, não é que o Estado esteja parado: é que ele se move onde a rede municipal atua e estaciona onde atua a rede estadual. O dado não substitui verificação presencial; indica onde ela é mais necessária.</p>';
+  if(POS.AI&&POS.AF&&POS.EM&&RIT.AI&&RIT.AF&&RIT.EM){
+    /* Conclusao em redacao didatica: o que o IDEB mede, a distincao entre patamar (posicao) e
+       ritmo (variacao desde 2023), uma leitura por etapa e cinco pontos numerados. Tudo e
+       calculado da base, para que o texto acompanhe a proxima divulgacao sem reescrita. */
+    function dist(ref, ap, ano){ var a=ref[ano], b=ap[ano]; return (a==null||b==null)? null : Math.round((a-b)*10)/10; }
+    function ritmoTxt(r){
+      return r.mais===0? 'o maior avanço do país'
+        : r.mais===1? 'o segundo maior avanço do país, superado por apenas uma unidade da federação'
+        : 'avanço superado por '+extF(r.mais)+' das '+extF(r.total)+' demais unidades da federação';
+    }
+    function distTxt(d){
+      if(d[0]==null&&d[1]==null) return '';
+      if(d[0]==null) return 'A distância para a média nacional é de '+pontos(d[1])+'; a base nacional de 2023 não traz essa etapa, por isso não se mede aqui a aproximação.';
+      if(d[1]<d[0]) return 'A distância para a média nacional caiu de '+pontos(d[0])+' para '+pontos(d[1])+': o Estado está se aproximando.';
+      if(d[1]>d[0]) return 'A distância para a média nacional cresceu de '+pontos(d[0])+' para '+pontos(d[1])+': o Estado está ficando para trás.';
+      return 'A distância para a média nacional ficou em '+pontos(d[1])+', a mesma de 2023: o Estado anda no passo do país, sem se aproximar.';
+    }
+    function titulo(d, r){
+      if(d[0]!=null&&d[1]!=null) return d[1]<d[0]? 'o Estado avança e se aproxima' : d[1]>d[0]? 'o Estado fica para trás' : 'o Estado avança no passo do país';
+      return r.mais<=2? 'o Estado avança mais depressa que quase todos' : r.mais<r.total/2? 'o Estado avança mais que a maioria' : 'o Estado avança menos que a maioria';
+    }
+    var dAI=[dist(BR['Pública'].AI,AP['Pública'].AI,'2023'),dist(BR['Pública'].AI,AP['Pública'].AI,'2025')];
+    var dAF=[dist(BR['Pública'].AF,AP['Pública'].AF,'2023'),dist(BR['Pública'].AF,AP['Pública'].AF,'2025')];
+    var dEM=[dist(BR['Estadual'].EM,AP['Estadual'].EM,'2023'),dist(BR['Estadual'].EM,AP['Estadual'].EM,'2025')];
+    var acum=Math.round((Math.abs(_q1ap)+Math.abs(_q2ap))*10)/10;
+    var ET=[['nos anos iniciais',dAI,RIT.AI],['nos anos finais',dAF,RIT.AF],['no ensino médio',dEM,RIT.EM]];
+    var conv=[], afast=[], semBase=[];
+    ET.forEach(function(e){ var d=e[1]; if(d[0]==null||d[1]==null) semBase.push(e[0]); else if(d[1]<d[0]) conv.push(e[0]); else if(d[1]>d[0]) afast.push(e[0]); });
+    var emMenosAvanca = RIT.EM.mais>=RIT.AI.mais && RIT.EM.mais>=RIT.AF.mais;
+    h+='<p '+P+'><b>O que o IDEB mede.</b> O índice junta duas informações: quanto os estudantes aprendem, medido pela prova do Saeb, e quantos são aprovados. Uma rede só sobe quando melhora as duas ao mesmo tempo. Para ler o resultado do Amapá, convém separar duas perguntas: <b>onde o Estado está</b> em relação aos demais (o patamar, dado pela posição no ranking) e <b>para onde ele vai</b> (o ritmo, dado pela variação desde 2023). A posição diz de onde o Estado partiu; o ritmo diz se a distância para o país está diminuindo ou não.</p>';
+    h+='<p '+P+'><b>Onde o Amapá está.</b> Em 2025, o Estado ficou na '+POS.AI.pos+'ª posição nos anos iniciais, na '+POS.AF.pos+'ª nos anos finais e na '+POS.EM.pos+'ª no ensino médio, entre as '+extF(POS.EM.total)+' unidades da federação'+(POS.EM.empatados.length? ', dividindo esta última com '+listar(POS.EM.empatados):'')+'. Nas três etapas, a nota está abaixo da média nacional. O patamar, portanto, é baixo em toda a trajetória escolar. O ritmo, porém, muda muito de uma etapa para outra.</p>';
+    h+='<p '+P+'><b>Anos iniciais (1º ao 5º ano): '+titulo(dAI,RIT.AI)+'.</b> A nota passou de '+f(AP['Pública'].AI['2023'])+' para '+f(AP['Pública'].AI['2025'])+' ('+sinal(RIT.AI.delta)+'), e '+extM(_AI.sobe)+' dos '+extM(_AI.total)+' municípios melhoraram. Foi '+ritmoTxt(RIT.AI)+'. '+distTxt(dAI)+' A posição ainda é ruim porque o Amapá partiu de muito atrás, mas a direção é a certa.</p>';
+    h+='<p '+P+'><b>Anos finais (6º ao 9º ano): '+titulo(dAF,RIT.AF)+'.</b> A nota passou de '+f(AP['Pública'].AF['2023'])+' para '+f(AP['Pública'].AF['2025'])+' ('+sinal(RIT.AF.delta)+'), '+ritmoTxt(RIT.AF)+'. '+distTxt(dAF)+' É aqui que começa a perda ao longo da trajetória: entre os anos iniciais e os finais, a nota cai '+pontos(_q1ap)+'.</p>';
+    h+='<p '+P+'><b>Ensino médio: '+titulo(dEM,RIT.EM)+'.</b> A nota passou de '+f(AP['Estadual'].EM['2023'])+' para '+f(AP['Estadual'].EM['2025'])+' ('+sinal(RIT.EM.delta)+'), '+ritmoTxt(RIT.EM)+'. '+distTxt(dEM)+' Há nova perda de '+pontos(_q2ap)+' em relação aos anos finais. Somadas as duas transições, um estudante perde '+pontos(acum)+' entre o início e o fim da educação básica: o Estado ensina melhor as crianças pequenas, mas não sustenta esse ganho conforme elas avançam. Esta é a etapa de responsabilidade direta da rede estadual.</p>';
+    h+='<p '+P+'><b>O que isso significa.</b> A ideia de que o Amapá "melhora sem convergir" para a média nacional não vale para o Estado inteiro. '
+      +(conv.length? 'A distância diminuiu '+listar(conv)+(conv.indexOf('nos anos iniciais')>=0&&RIT.AI.mais<=1? ', e mais depressa que em quase todos os outros Estados':'')+'. ':'')
+      +(afast.length? 'Ela aumentou '+listar(afast)+'. ':'')
+      +(semBase.length? 'E '+listar(semBase)+' o avanço existe, mas a base nacional de 2023 não permite medir a aproximação. ':'')
+      +'O problema, portanto, concentra-se nas etapas finais e cresce à medida que a responsabilidade passa da rede municipal para a estadual. Em resumo:</p>';
+    var concl=[
+      '<b>Reconhecer o avanço nos anos iniciais.</b> '+extM(_AI.sobe).charAt(0).toUpperCase()+extM(_AI.sobe).slice(1)+' dos '+extM(_AI.total)+' municípios melhoraram e o Estado teve '+(RIT.AI.mais===0?'o maior':RIT.AI.mais===1?'o segundo maior':'um dos maiores')+' avanço do país na etapa. Esse ganho deve ser acompanhado e preservado, não substituído por novas frentes.',
+      '<b>Priorizar o ensino médio.</b> É a etapa em que '+(emMenosAvanca?'o Amapá menos avança, em que ':'')+(dEM[0]!=null&&dEM[1]>dEM[0]?'a distância para a média nacional aumentou desde 2023 e em que ':'')+'a perda acumulada da trajetória escolar é maior. A atuação do CAO e das Promotorias deve concentrar-se na rede estadual.',
+      '<b>Investigar a perda entre etapas.</b> A queda de '+pontos(_q1ap)+' dos anos iniciais para os finais e de '+pontos(_q2ap)+' destes para o médio indica que os ganhos da alfabetização não se sustentam. Cabe verificar, município a município, se a passagem do 5º para o 6º ano, em regra da rede municipal para a estadual, vem acompanhada de recomposição de aprendizagem.',
+      '<b>Manter o critério de achado dos relatórios das Promotorias.</b> Toda etapa com nota abaixo da média nacional, sem resultado divulgado ou em queda desde 2023 segue gerando item no Plano de Atuação. Assim, a melhora de posição não encobre os municípios que ainda estão abaixo do piso nacional.',
+      '<b>Reavaliar em 2027.</b> A próxima divulgação do IDEB dirá se o avanço dos anos iniciais se sustenta e se as medidas voltadas ao ensino médio começaram a reduzir a distância para a média nacional.'
+    ];
+    h+='<ol style="list-style:none; margin:8px 0 0; padding:0;">';
+    concl.forEach(function(t,i){
+      h+='<li class="rc-interp-p" style="display:flex; gap:10px; align-items:baseline; padding:6px 0; border-bottom:1px solid rgba(13,36,54,0.06);"><b style="flex:0 0 auto; min-width:26px;">'+(i+1)+'.</b><span>'+t+'</span></li>';
+    });
+    h+='</ol>';
+    h+='<p '+P+' style="margin-top:10px;">O dado não substitui a verificação presencial; indica onde ela é mais necessária.</p>';
   } else {
     h+='<p '+P+'>O IDEB 2025 mostra um Estado em melhora real, porém sem convergência: o Amapá avança no mesmo ritmo do país e, por isso, permanece na retaguarda nacional, vigésimo terceiro no ensino médio estadual. O dado não substitui verificação presencial; indica onde ela é mais necessária.</p>';
   }
