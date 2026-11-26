@@ -15,6 +15,7 @@ e grava o arquivo final. Rodar, nesta pasta: `python3 g1.py` (e assim por diante
 ## Demais arquivos
 - 06_painel_de_metricas.md, 07_fonte_notebooklm.md, 07_roteiro_video.md, 07_instrucoes_video.txt: material de apoio (métricas, fonte para o NotebookLM, roteiro de vídeo).
 - IndicadorMP-Apresentacao.html / .pdf e apresentação.indicadorMP.gamma.rtf: apresentação do painel.
+- Proposta_Projeto_Estrategico_IndicadorMP.docx / .odt: proposta de projeto estratégico.
 - arquitetura-indicadormp.html, governanca-dados.html, padroes-nacionais.html, trilha-resolutiva-fluxograma.html: páginas de documentação técnica.
 
 Observação: os textos de g2 e g4 citam o painel com "aproximadamente 14 MB" e a rotina de
