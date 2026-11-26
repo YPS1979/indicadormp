@@ -10,7 +10,7 @@ Artefato publicado: https://claude.ai/artifact/Sps523SJDUoPkKmaFLXiwn
 - atualizar_conselho_tutelar.py: atualiza o painel de Conselhos Tutelares (Rec. CNMP 119/2025) a partir do CSV do CNMP; lê fontes/ e grava cópia em backups/.
 - publicar/publicar.sh: publica o painel no Cloudflare Pages (https://indicadormp.pages.dev) como PWA; depende de publicar/public (sw.js, manifest.json, icons/), ainda só no Mac.
 - gerar_visual.py: gerador aposentado em 14/08/2026 (a enviar do Mac, só como registro).
-- fontes/: CSVs de origem (a enviar do Mac).
+- fontes/: 29 arquivos de origem: exportações do sistema de inspeções do CNMP por eixo e ciclo (2S/2025 e 1S/2026), IDEB 2025, taxonomia CNJ (classes, assuntos, movimentos), matriz de atribuições das PJs, anuário 2025, logo.
 - documentos/: geradores dos cinco documentos institucionais (manuais, justificativa, requerimento, apresentação); falta _base.py.
 
 Os scripts calculam caminhos a partir da própria pasta: devem ficar onde estão nesta árvore.
