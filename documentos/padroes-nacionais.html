@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Padrões Nacionais · IndicadorMP</title>
+<style>
+:root{--azul:#0072bc;--tinta:#0d2436;--sub:#4c6072;--linha:rgba(13,36,54,.10);}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;max-width:1080px;margin:0 auto;padding:26px;background:#eef2f6;color:var(--tinta);line-height:1.55}
+h1{background:linear-gradient(135deg,#0072bc,#00548a);color:#fff;padding:24px 28px;border-radius:16px;font-size:23px;margin:0 0 6px}
+h1 small{display:block;font-weight:400;font-size:13px;opacity:.9;margin-top:6px}
+h2{font-size:18px;border-bottom:2px solid var(--linha);padding-bottom:7px;margin:30px 0 6px}
+.lead{color:var(--sub);font-size:13.5px;margin:8px 0 14px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px rgba(20,50,90,.06);font-size:13px}
+th{background:#f6f8fb;text-align:left;padding:10px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--sub);border-bottom:2px solid var(--linha)}
+td{padding:9px 12px;border-bottom:1px solid var(--linha);vertical-align:middle}
+td.num{text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.bdg{display:inline-block;font-size:10px;font-weight:800;border-radius:6px;padding:2px 7px;margin:1px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+.cluster{background:#fff;border:1px solid var(--linha);border-radius:14px;padding:16px 18px;box-shadow:0 3px 12px rgba(20,50,90,.06);border-left:5px solid #1a9c56}
+.cluster.warn{border-left-color:#a97600} .cluster.crit{border-left-color:#b8323b}
+.ct-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.ct-nome{font-weight:800;font-size:15px} .ct-n{font-size:12px;color:var(--sub);white-space:nowrap}
+.ct-kpis{display:flex;gap:16px;font-size:12px;color:var(--sub);margin:6px 0 8px} .ct-kpis b{color:var(--tinta);font-size:15px}
+.ct-sig{margin:6px 0;padding-left:18px;font-size:12.5px} .ct-sig li{margin:2px 0}
+.ct-acao{font-size:12.5px;background:#f6f8fb;border-radius:8px;padding:8px 10px;margin-top:8px}
+.ct-ex{font-size:11.5px;color:#7c8b98;margin-top:6px}
+.nota{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:14px 18px;font-size:12.5px;color:var(--sub);margin-top:14px;line-height:1.7}
+.foot{font-size:11px;color:#7c8b98;margin-top:22px}
+</style></head><body>
+<h1>Padrões Nacionais — Inspeções de Acolhimento
+<small>IndicadorMP · Corregedoria-Geral do MP-AP · base nacional CNMP: 645 unidades · análise exploratória</small></h1>
+
+<h2>1. Bases legais mais reincidentes</h2>
+<p class="lead">Fundamentos que mais reaparecem no conjunto — indicam falha estrutural crônica, candidata a resposta normativa/coletiva (recomendação-modelo ou TAC de referência) em vez de atuação caso a caso.</p>
+<table><thead><tr><th>Ocorr.</th><th>Unid.</th><th>% de 645</th><th>Severidade</th><th>Base legal</th></tr></thead><tbody><tr><td class="num">767</td><td class="num">435</td><td class="num">67.4%</td><td><span class="bdg" style="background:#0072bc22;color:#0072bc">Atenção 584</span> <span class="bdg" style="background:#a9760022;color:#a97600">Média 103</span> <span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 80</span></td><td>Orientações Técnicas</td></tr><tr><td class="num">515</td><td class="num">515</td><td class="num">79.8%</td><td><span class="bdg" style="background:#a9760022;color:#a97600">Média 515</span></td><td>NOB-RH/SUAS</td></tr><tr><td class="num">505</td><td class="num">253</td><td class="num">39.2%</td><td><span class="bdg" style="background:#a9760022;color:#a97600">Média 356</span> <span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 68</span> <span class="bdg" style="background:#0072bc22;color:#0072bc">Atenção 81</span></td><td>Art. 94, XX, c/c §1º, ECA</td></tr><tr><td class="num">197</td><td class="num">197</td><td class="num">30.5%</td><td><span class="bdg" style="background:#0072bc22;color:#0072bc">Atenção 197</span></td><td>Arts. 59 e 71, ECA</td></tr><tr><td class="num">186</td><td class="num">186</td><td class="num">28.8%</td><td><span class="bdg" style="background:#a9760022;color:#a97600">Média 186</span></td><td>Art. 101, §5º, ECA</td></tr><tr><td class="num">179</td><td class="num">179</td><td class="num">27.8%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 179</span></td><td>Art. 101, §4º, ECA</td></tr><tr><td class="num">155</td><td class="num">155</td><td class="num">24.0%</td><td><span class="bdg" style="background:#a9760022;color:#a97600">Média 155</span></td><td>Orientações Técnicas CNAS/CONANDA nº 1/2009</td></tr><tr><td class="num">153</td><td class="num">152</td><td class="num">23.6%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 153</span></td><td>Art. 90, §1º, ECA</td></tr><tr><td class="num">132</td><td class="num">132</td><td class="num">20.5%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 132</span></td><td>Art. 93, caput, c/c art. 136, parágrafo único, ECA</td></tr><tr><td class="num">124</td><td class="num">124</td><td class="num">19.2%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 124</span></td><td>Art. 101, §3º, ECA</td></tr><tr><td class="num">114</td><td class="num">111</td><td class="num">17.2%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 10</span> <span class="bdg" style="background:#a9760022;color:#a97600">Média 104</span></td><td>Art. 92, V, ECA</td></tr><tr><td class="num">107</td><td class="num">107</td><td class="num">16.6%</td><td><span class="bdg" style="background:#a9760022;color:#a97600">Média 107</span></td><td>Art. 101, §2º, ECA</td></tr><tr><td class="num">96</td><td class="num">96</td><td class="num">14.9%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 96</span></td><td>NOB-RH/SUAS e Res. CONANDA</td></tr><tr><td class="num">72</td><td class="num">72</td><td class="num">11.2%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 72</span></td><td>Art. 34, §2º, c/c art. 33, ECA</td></tr><tr><td class="num">53</td><td class="num">53</td><td class="num">8.2%</td><td><span class="bdg" style="background:#b8323b22;color:#b8323b">Alta 53</span></td><td>Art. 19, §1º, ECA</td></tr></tbody></table>
+
+<h2>2. Agrupamento de unidades por perfil de falha</h2>
+<p class="lead">k-means (6 grupos) sobre a presença das 30 desconformidades mais comuns. Agrupa unidades com o mesmo padrão de falha, permitindo atuação temática coletiva. Ordenado do menor ao maior escore médio.</p>
+<div class="grid"><div class="cluster ">
+      <div class="ct-head"><span class="ct-nome">Conformes / falhas pontuais</span><span class="ct-n">208 unidades</span></div>
+      <div class="ct-kpis"><span>escore médio <b>5.4</b></span><span>2.6 desconf./unid.</span></div>
+      <ul class="ct-sig"><li>sem assinatura dominante (poucas falhas)</li></ul>
+      <div class="ct-acao"><b>Atuação sugerida:</b> Monitorar no próximo ciclo.</div>
+      <div class="ct-ex">Ex.: Abelardo Luz, Abreu e Lima, Agudos do Sul, Almirante Tamandaré, Alta Floresta</div>
+    </div><div class="cluster ">
+      <div class="ct-head"><span class="ct-nome">Formação da equipe</span><span class="ct-n">159 unidades</span></div>
+      <div class="ct-kpis"><span>escore médio <b>7.9</b></span><span>4.2 desconf./unid.</span></div>
+      <ul class="ct-sig"><li>96% — Sem programa de formação continuada para a equipe</li></ul>
+      <div class="ct-acao"><b>Atuação sugerida:</b> Capacitação regional única para as equipes.</div>
+      <div class="ct-ex">Ex.: Abatiá, Aguanil, Alcinópolis, Alfredo Chaves, Almadina</div>
+    </div><div class="cluster ">
+      <div class="ct-head"><span class="ct-nome">Convivência (cultura, esporte e lazer)</span><span class="ct-n">108 unidades</span></div>
+      <div class="ct-kpis"><span>escore médio <b>8.7</b></span><span>4.7 desconf./unid.</span></div>
+      <ul class="ct-sig"><li>99% — Sem atividades culturais, esportivas e de lazer</li></ul>
+      <div class="ct-acao"><b>Atuação sugerida:</b> Articular a rede socioassistencial e cultural local.</div>
+      <div class="ct-ex">Ex.: Abaetetuba, Aguiarnópolis, Alegrete, Alpercata, Altônia</div>
+    </div><div class="cluster ">
+      <div class="ct-head"><span class="ct-nome">Governança e supervisão</span><span class="ct-n">62 unidades</span></div>
+      <div class="ct-kpis"><span>escore médio <b>9.9</b></span><span>4.6 desconf./unid.</span></div>
+      <ul class="ct-sig"><li>100% — Sem supervisão técnica do órgão gestor</li><li>96% — Equipe não é exclusiva (carga &lt; 30h ou compartilhada)</li></ul>
+      <div class="ct-acao"><b>Atuação sugerida:</b> Cobrar formalmente o órgão gestor municipal.</div>
+      <div class="ct-ex">Ex.: Apucarana, Araguari, Araucária, Araxá, Bariri</div>
+    </div><div class="cluster warn">
+      <div class="ct-head"><span class="ct-nome">Documentação técnica (PIA e prontuário)</span><span class="ct-n">63 unidades</span></div>
+      <div class="ct-kpis"><span>escore médio <b>19.0</b></span><span>9.3 desconf./unid.</span></div>
+      <ul class="ct-sig"><li>93% — Prontuário sem documentos de saúde</li><li>80% — Nem todos os acolhidos possuem PIA elaborado</li><li>79% — PIA sem participação da família</li><li>73% — Prontuário sem documentos pessoais</li></ul>
+      <div class="ct-acao"><b>Atuação sugerida:</b> Recomendação-modelo de gestão de caso (PIA e prontuário).</div>
+      <div class="ct-ex">Ex.: Bela Vista de Minas, Bertópolis, Bom Jesus do Oeste, Bombinhas, Cabedelo</div>
+    </div><div class="cluster crit">
+      <div class="ct-head"><span class="ct-nome">Falha sistêmica</span><span class="ct-n">45 unidades</span></div>
+      <div class="ct-kpis"><span>escore médio <b>40.0</b></span><span>18.6 desconf./unid.</span></div>
+      <ul class="ct-sig"><li>97% — Prontuário sem documentos pessoais</li><li>95% — CT não comunicou o acolhimento excepcional ao MP em 24h</li><li>95% — PIA sem participação da família</li><li>95% — Prontuário sem documentos de saúde</li></ul>
+      <div class="ct-acao"><b>Atuação sugerida:</b> Prioridade máxima — TAC ou ACP individualizado e imediato.</div>
+      <div class="ct-ex">Ex.: Alvorada do Sul, Aracruz, Arroio Grande, Ataléia, Balsa Nova</div>
+    </div></div>
+
+<div class="nota"><b>Método.</b> Contagem de fundamentos legais (análise 1) e agrupamento por k-means sobre vetores binários de presença de desconformidades (análise 2) — critério transparente e auditável, sem caixa-preta. <b>Uso.</b> Orienta a priorização; a decisão e a atribuição seguem do membro. <b>Amapá.</b> Nesta base nacional constam apenas 2 unidades do AP (Santana), insuficientes para análise estadual isolada — os padrões acima são do conjunto nacional.</div>
+<p class="foot">Gerado pelo IndicadorMP a partir de ALL_RESULTS (645 unidades).</p>
+</body></html>

@@ -1,0 +1,83 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Manual do Usuário · IndicadorMP</title>
+<style>
+:root{--tinta:#0d2436;--sub:#44586a;--verde:#1f5c46;--azul:#005B96;--linha:#dfe6ec;--bg:#fff;}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f8fc;color:var(--tinta);font-family:'IBM Plex Serif',Georgia,serif;line-height:1.62;font-size:16px;}
+.folha{max-width:900px;margin:24px auto;background:#fff;padding:56px 64px;border:1px solid var(--linha);}
+.tri{display:flex;height:7px;margin-bottom:26px}
+.tri span{flex:1}.tri span:nth-child(1){background:#2f6690}.tri span:nth-child(2){background:var(--verde)}.tri span:nth-child(3){background:#e8b33a}
+.marca{font-family:'IBM Plex Sans',system-ui,sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--verde)}
+.marca small{display:block;font-weight:600;letter-spacing:.1em;color:#6b7a86;font-size:10px;margin-top:2px}
+h1{font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:30px;line-height:1.18;letter-spacing:-.02em;margin:26px 0 6px}
+h2{font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:18px;margin:30px 0 8px;color:var(--tinta);border-bottom:1px solid var(--linha);padding-bottom:6px}
+h3{font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:14.5px;margin:20px 0 4px;color:var(--verde)}
+p,li{text-align:justify}
+.sub{color:var(--sub);font-size:15px;margin:0 0 18px}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:13.5px;margin:12px 0 18px}
+th{background:#eef3f7;text-align:left;padding:8px 10px;border:1px solid #ccd6df;font-weight:700}
+td{padding:7px 10px;border:1px solid #dde4ea;vertical-align:top}
+.nota{border-left:3px solid var(--azul);background:#f2f7fb;padding:10px 14px;margin:14px 0;font-size:14.5px}
+code{background:#f2f5f8;padding:1px 5px;border:1px solid #e0e7ee;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.rod{margin-top:36px;border-top:1px solid var(--linha);padding-top:10px;font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:#7a8791;display:flex;justify-content:space-between}
+ol,ul{padding-left:22px}
+@media print{body{background:#fff}.folha{border:0;margin:0;padding:0;max-width:none}@page{size:A4;margin:2cm}}
+</style>
+</head><body><div class="folha"><div class="tri"><span></span><span></span><span></span></div><div class="marca">IndicadorMP<small>Corregedoria-Geral do Ministério Público do Estado do Amapá</small></div><h1>Manual do Usuário</h1><p class="sub">IndicadorMP · orientações de navegação, leitura dos indicadores e geração de relatórios</p>
+<h2>1. O que é o IndicadorMP</h2>
+<p>O IndicadorMP é o painel de inteligência de dados da Corregedoria-Geral do Ministério Público do Estado do Amapá. Reúne, em um único arquivo que abre no navegador e funciona sem conexão com a internet, duas camadas de informação: as inspeções e visitas técnicas realizadas pelo MP-AP com base nas Resoluções e Recomendações do CNMP e o retrato social, econômico e institucional dos 16 municípios do Estado, extraído de mais de trinta fontes oficiais.</p>
+<p>Na versão atual, o painel consolida <strong>97 unidades inspecionadas</strong> no ciclo 2026, distribuídas em <strong>12 comarcas</strong> e <strong>16 municípios</strong>, com <strong>729 não conformidades</strong> apuradas, além de <strong>786 escolas</strong> da educação básica e da rede socioassistencial do Censo SUAS.</p>
+
+<h2>2. Como navegar</h2>
+<h3>Coluna da esquerda</h3>
+<table><tr><th style="width:26%">Aba</th><th>O que traz</th></tr>
+<tr><td>Início</td><td>Apresentação do painel: o que é, para que serve e o fundamento normativo.</td></tr>
+<tr><td>Indicadores</td><td>Reúne dois grupos: <em>Indicadores CNMP</em>, com os dez eixos de inspeção, e <em>Outros Indicadores</em>, com as bases que descrevem a rede local (Censo SUAS, Censo Escolar, Radar da Transparência).</td></tr>
+<tr><td>Dados de apoio</td><td>Bases de contexto: Censo 2022 (IBGE), Saúde (DataSUS), Bolsa Família e CadÚnico (MDS) e acervo judicial (DataJud).</td></tr>
+<tr><td>Relatórios</td><td>Geração dos três relatórios institucionais.</td></tr>
+<tr><td>Documentação</td><td>Apresentação do painel, governança de dados (calendário de coleta das fontes) e este manual.</td></tr>
+</table>
+
+<h3>Dentro de cada painel</h3>
+<p>Os painéis de inspeção seguem sempre a mesma sequência de páginas: <strong>Sobre</strong> (o que a norma exige), <strong>Indicadores</strong> (o quadro completo de itens verificados, com severidade e fundamento legal), <strong>Amapá</strong> (o retrato estadual, unidade por unidade), <strong>Padrão Nacional</strong> (a comparação com o Brasil) e <strong>Evolução</strong> (a comparação entre ciclos, quando há dois ciclos coletados).</p>
+
+<h2>3. Como ler os números</h2>
+<table><tr><th style="width:24%">Conceito</th><th>Definição</th></tr>
+<tr><td>Indicador</td><td>Pergunta objetiva do roteiro oficial de inspeção. A resposta pode ser conforme, não conforme ou não informado.</td></tr>
+<tr><td>Não conformidade</td><td>Cada resposta “não conforme”. É o achado que enseja atuação.</td></tr>
+<tr><td>Severidade</td><td><strong>Alta</strong>: violação direta de direito ou risco imediato. <strong>Média</strong>: obrigação legal expressa descumprida. <strong>Atenção</strong>: parâmetro de qualidade ou sinal de alerta.</td></tr>
+<tr><td>Trilha resolutiva</td><td>Sugestão de encaminhamento para cada não conformidade, com parâmetro normativo e o registro taxonômico (classe e assunto) a adotar na instauração.</td></tr>
+</table>
+<div class="nota">A severidade não é adjetivo: ela separa o que exige resposta imediata, por atingir direito indisponível, do que comporta prazo, plano e monitoramento.</div>
+
+<h2>4. Os relatórios</h2>
+<h3>4.1 Relatório de Diagnóstico por Promotoria de Justiça</h3>
+<p>Documento completo da comarca. Estrutura: <em>Parte 1</em> — apresentação e metodologia; <em>Parte 2</em> — resumo, análise por unidade ou serviço, contexto municipal em fontes integradas, evolução da reinspeção, plano de atuação sugerido, orientações para o monitoramento do resultado e conclusão. Traz ainda o anexo com a relação das escolas da rede local.</p>
+<h3>4.2 Relatório de Não Conformidades por Município</h3>
+<p>Recorte objetivo por município ou comarca, com o quadro das unidades, o detalhamento das não conformidades e o complemento das demais bases.</p>
+<h3>4.3 Relatório de Diagnóstico por CAO</h3>
+<p>Leitura temática para os Centros de Apoio Operacional, inclusive para áreas sem inspeção própria — como a Educação, cujo diagnóstico é construído sobre os microdados do INEP.</p>
+
+<h3>Como gerar</h3>
+<ol>
+<li>Abra a aba <strong>Relatórios</strong> e escolha a subaba desejada.</li>
+<li>Selecione o filtro (Promotoria, Município ou CAO).</li>
+<li>Clique em <strong>Pesquisar</strong> — o relatório é montado na tela.</li>
+<li>Clique em <strong>Salvar/Imprimir</strong> e escolha “Salvar como PDF”. O nome do arquivo já vem sugerido no padrão <code>Relatório por Promotoria_IndicadorMP_Município</code>.</li>
+</ol>
+<div class="nota">Marque a opção “Gráficos de plano de fundo” do navegador apenas se quiser conferir; o painel já força a impressão fiel das cores, independentemente dessa caixa.</div>
+
+<h2>5. Limites de uso</h2>
+<ul>
+<li>Os dados das inspeções são verificados pelo Ministério Público; os das demais bases são <strong>autodeclarados</strong> pelos gestores aos órgãos de origem e não passaram por conferência in loco.</li>
+<li>Os indicadores sociais são <strong>médias municipais</strong> e escondem desigualdades internas entre bairros, zona rural e comunidades tradicionais.</li>
+<li>Os relatórios são <strong>diagnósticos</strong>: prioridades e prazos têm natureza de proposta técnica, cabendo ao membro titular, com independência funcional, definir instrumentos e estratégia.</li>
+</ul>
+
+<h2>6. Perguntas frequentes</h2>
+<table><tr><th style="width:34%">Pergunta</th><th>Resposta</th></tr>
+<tr><td>Preciso de internet?</td><td>Não. O painel é um arquivo único e funciona offline, inclusive para gerar e salvar relatórios.</td></tr>
+<tr><td>Posso enviar o arquivo a terceiros?</td><td>Sim. Não há dados pessoais sensíveis: as bases são públicas ou agregadas.</td></tr>
+<tr><td>Como sei se um dado está desatualizado?</td><td>A aba Documentação traz o calendário de coleta de cada fonte, com referência carregada, recorrência e situação.</td></tr>
+<tr><td>Encontrei um erro. O que faço?</td><td>Use a aba Sugestões, que abre uma mensagem endereçada à Corregedoria-Geral.</td></tr>
+</table>
+<div class="rod"><span>IndicadorMP · Corregedoria-Geral do MP-AP</span><span>Documento de trabalho · 2026</span></div></div></body></html>

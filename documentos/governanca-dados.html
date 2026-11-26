@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Governança de Dados · IndicadorMP</title>
+<style>
+:root{--azul:#0072bc;--azul-dk:#00548a;--verde:#1a7f37;--amarelo:#a97600;--vermelho:#b8323b;
+--bg:#eef2f6;--card:#fff;--tinta:#0d2436;--sub:#4c6072;--mute:#7c8b98;--linha:rgba(13,36,54,.10);--radius:14px;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--tinta);line-height:1.55;padding:22px}
+.wrap{max-width:1240px;margin:0 auto}
+header.hd{background:linear-gradient(135deg,var(--azul),var(--azul-dk));color:#fff;border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:0 6px 20px rgba(20,50,90,.10)}
+header.hd h1{font-size:21px;font-weight:800;letter-spacing:-.3px}
+header.hd .sb{font-size:12.5px;opacity:.92;margin-top:5px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.filters label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.8px;opacity:.8;margin-bottom:4px}
+.filters select,.filters input{padding:7px 10px;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:rgba(255,255,255,.14);color:#fff;font-size:12.5px;min-width:150px}
+.filters select option{background:var(--azul-dk);color:#fff}
+.filters input::placeholder{color:rgba(255,255,255,.7)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:14px 16px;box-shadow:0 3px 10px rgba(20,50,90,.05);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:currentColor;opacity:.9}
+.kpi .l{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:var(--sub);margin-bottom:6px}
+.kpi .v{font-size:26px;font-weight:800;line-height:1.05}
+.kpi .s{font-size:10.5px;color:var(--mute);margin-top:5px}
+.grid2{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-bottom:16px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--linha);border-radius:var(--radius);padding:18px 20px;box-shadow:0 3px 12px rgba(20,50,90,.05)}
+.card h3{font-size:13.5px;font-weight:800;margin-bottom:14px}
+.donut-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.donut{width:150px;height:150px;border-radius:50%;flex-shrink:0;position:relative}
+.donut::after{content:'';position:absolute;inset:26px;background:var(--card);border-radius:50%}
+.donut-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2}
+.donut-c b{font-size:24px;font-weight:800}.donut-c span{font-size:9.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.8px}
+.leg{display:flex;flex-direction:column;gap:8px;font-size:12.5px}
+.leg i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:7px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.brow{display:flex;align-items:center;gap:10px;font-size:12px}
+.bname{width:104px;flex-shrink:0;color:var(--sub);text-align:right}
+.btrack{flex:1;height:16px;background:rgba(0,40,80,.06);border-radius:8px;overflow:hidden}
+.bfill{height:100%;border-radius:8px;transition:width .3s ease}
+.bval{width:34px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.tl{display:flex;align-items:flex-end;gap:5px;height:120px;margin-top:6px}
+.tlc{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;min-width:0}
+.tlb{width:100%;border-radius:5px 5px 0 0;min-height:3px;transition:height .3s ease}
+.tll{font-size:8.5px;color:var(--mute);white-space:nowrap;transform:rotate(-45deg);transform-origin:center;margin-top:6px}
+.tv{font-size:9.5px;font-weight:800;color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;padding:9px 10px;border-bottom:2px solid rgba(13,36,54,.16);font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--sub);cursor:pointer;user-select:none;white-space:nowrap}
+th:hover{color:var(--tinta)}
+td{padding:9px 10px;border-bottom:1px solid var(--linha);vertical-align:middle}
+tbody tr:hover{background:#f7f9fc}
+.bdg{display:inline-block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;border-radius:6px;padding:3px 8px;white-space:nowrap}
+.ok{background:rgba(26,127,55,.12);color:var(--verde)}
+.warn{background:rgba(169,118,0,.14);color:var(--amarelo)}
+.bad{background:rgba(184,50,59,.12);color:var(--vermelho)}
+.tag{display:inline-block;font-size:9.5px;font-weight:700;background:rgba(0,114,188,.10);color:var(--azul);border-radius:6px;padding:2px 7px}
+.tblwrap{overflow-x:auto;margin-top:2px}
+details.man{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:0;margin-bottom:9px;box-shadow:0 2px 8px rgba(20,50,90,.04)}
+details.man summary{padding:13px 18px;font-size:13.5px;font-weight:700;cursor:pointer;list-style:none}
+details.man summary::-webkit-details-marker{display:none}
+details.man summary::before{content:'▸';color:var(--azul);font-weight:800;margin-right:9px;display:inline-block;transition:transform .2s}
+details.man[open] summary::before{transform:rotate(90deg)}
+details.man .body{padding:0 18px 16px;font-size:13px;line-height:1.8;color:var(--sub);text-align:justify}
+.sechd{font-size:15px;font-weight:800;margin:24px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--linha)}
+footer{font-size:11px;color:var(--mute);margin-top:22px;text-align:center}
+@media print{body{background:#fff;padding:0}.filters{display:none}.card,.kpi{box-shadow:none;break-inside:avoid}details.man{break-inside:avoid}details.man .body{display:block!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hd">
+  <h1>Governança de Dados · IndicadorMP</h1>
+  <div class="sb">Calendário de coleta e atualização das fontes oficiais · Corregedoria-Geral do MP-AP · status calculado em <span id="hoje"></span></div>
+  <div class="filters">
+    <div><label for="f-status">Status</label><select id="f-status"><option value="">Todos os status</option><option value="ok">Em dia</option><option value="warn">Programar coleta</option><option value="bad">Coleta vencida</option></select></div>
+    <div><label for="f-rec">Recorrência</label><select id="f-rec"><option value="">Todas</option></select></div>
+    <div><label for="f-org">Órgão / fonte</label><select id="f-org"><option value="">Todos</option></select></div>
+    <div><label for="f-busca">Busca livre</label><input id="f-busca" type="text" placeholder="fonte, norma, referência..."></div>
+  </div>
+</header>
+
+<section class="kpis" id="kpis"></section>
+
+<section class="grid2">
+  <div class="card">
+    <h3>Situação das fontes</h3>
+    <div class="donut-wrap">
+      <div style="position:relative"><div class="donut" id="donut"></div><div class="donut-c"><b id="dn-tot">0</b><span>fontes</span></div></div>
+      <div class="leg" id="leg"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Fontes por recorrência de atualização</h3>
+    <div class="bars" id="bars"></div>
+  </div>
+</section>
+
+<section class="card" style="margin-bottom:16px">
+  <h3>Próximas coletas por mês</h3>
+  <div class="tl" id="tl"></div>
+  <div style="display:flex;gap:4px;margin-top:2px" id="tl-lbl"></div>
+</section>
+
+<section class="card">
+  <h3 style="margin-bottom:4px">Calendário de coleta <span id="tbl-count" style="font-weight:600;color:var(--azul);font-size:12px"></span></h3>
+  <div class="tblwrap"><table id="tbl">
+    <thead><tr>
+      <th data-c="fonte">Fonte de dados</th><th data-c="norma">Norma / origem</th>
+      <th data-c="recFam">Recorrência</th><th data-c="ref">Referência carregada</th>
+      <th data-c="prox">Próxima coleta</th><th data-c="dias">Status</th>
+    </tr></thead><tbody></tbody>
+  </table></div>
+</section>
+
+<div class="sechd">Manual do Usuário</div>
+<div id="manual"></div>
+
+<footer>IndicadorMP · Corregedoria-Geral do Ministério Público do Estado do Amapá · painel offline, sem dependências externas.</footer>
+</div>
+
+<script>
+const DADOS = [{"fonte": "LA e PSC (medidas socioeducativas)", "norma": "Res. CNMP 204/2019", "rec": "Anual", "recFam": "Anual", "ref": "Ano base 2026", "prox": "2027-03-31", "orgao": "CNMP"}, {"fonte": "Acolhimento Institucional - CNMP", "norma": "Res. CNMP 293/2024", "rec": "Semestral", "recFam": "Semestral", "ref": "1º semestre/2026", "prox": "2027-01-31", "orgao": "CNMP"}, {"fonte": "Acolhimento Familiar - CNMP", "norma": "Res. CNMP 293/2024", "rec": "Semestral", "recFam": "Semestral", "ref": "1º semestre/2026", "prox": "2027-01-31", "orgao": "CNMP"}, {"fonte": "Conselhos Tutelares - CNMP", "norma": "Rec. CNMP 119/2025", "rec": "Anual", "recFam": "Anual", "ref": "Rodada 2026", "prox": "2027-03-31", "orgao": "CNMP"}, {"fonte": "ILPIs (pessoa idosa)", "norma": "Res. CNMP 154/2016", "rec": "Anual", "recFam": "Anual", "ref": "Rodada 2026", "prox": "2027-03-31", "orgao": "CNMP"}, {"fonte": "Estabelecimentos Prisionais", "norma": "Res. CNMP 277/2023", "rec": "Semestral (ciclo do painel)", "recFam": "Semestral", "ref": "1º semestre/2026", "prox": "2027-01-31", "orgao": "CNMP"}, {"fonte": "Delegacias de Polícia Civil", "norma": "Res. CNMP 279/2023", "rec": "Semestral (ciclo do painel)", "recFam": "Semestral", "ref": "1º semestre/2026", "prox": "2027-01-31", "orgao": "CNMP"}, {"fonte": "Polícia Científica", "norma": "Res. CNMP 279/2023", "rec": "Semestral (ciclo do painel)", "recFam": "Semestral", "ref": "1º semestre/2026", "prox": "2027-01-31", "orgao": "CNMP"}, {"fonte": "Medicina Legal", "norma": "Res. CNMP 279/2023", "rec": "Semestral (ciclo do painel)", "recFam": "Semestral", "ref": "1º semestre/2026", "prox": "2027-01-31", "orgao": "CNMP"}, {"fonte": "Estabelecimentos Militares", "norma": "Res. CNMP 279/2023", "rec": "Semestral (ciclo do painel)", "recFam": "Semestral", "ref": "1º semestre/2026", "prox": "2027-01-31", "orgao": "CNMP"}, {"fonte": "Criminalidade (Anuário FBSP)", "norma": "Fórum Brasileiro de Segurança Pública", "rec": "Anual (publicação em julho)", "recFam": "Anual", "ref": "Anuário 2025 coletado (ano-base 2024)", "prox": "2027-07-31", "orgao": "FBSP/Ipea"}, {"fonte": "Atlas da Violência (Ipea/FBSP)", "norma": "Ipea e Fórum Brasileiro de Segurança Pública", "rec": "Anual (publicação no 2º semestre)", "recFam": "Anual", "ref": "Atlas 2026 coletado (ano-base 2024)", "prox": "2027-08-31", "orgao": "FBSP/Ipea"}, {"fonte": "Educação - Censo Escolar (INEP)", "norma": "Decreto 6.425/2008", "rec": "Anual (microdados no 1º trimestre)", "recFam": "Anual", "ref": "Censo Escolar 2025", "prox": "2027-02-28", "orgao": "INEP"}, {"fonte": "Assistência Social - Censo SUAS (MDS)", "norma": "Decreto 7.334/2010", "rec": "Anual (coleta set-nov, divulgação no ano seguinte)", "recFam": "Anual", "ref": "Censo SUAS 2024", "prox": "2026-08-31", "orgao": "MDS"}, {"fonte": "Conselhos de Direito - MPAP", "norma": "Levantamento próprio (CMDCA/CEDCA)", "rec": "Anual", "recFam": "Anual", "ref": "Levantamento 2026", "prox": "2027-03-31", "orgao": "MP-AP"}, {"fonte": "MDS - Bolsa Família / CadÚnico / BPC", "norma": "API SAGI (misocial)", "rec": "Mensal", "recFam": "Mensal", "ref": "Competência jun/2026", "prox": "2026-08-15", "orgao": "MDS"}, {"fonte": "Transparência - Radar PNTP (Atricon)", "norma": "Programa Nacional de Transparência Pública", "rec": "Anual (divulgação no 2º semestre)", "recFam": "Anual", "ref": "Ciclo 2025", "prox": "2026-11-30", "orgao": "Atricon"}, {"fonte": "Trabalho - CEMPRE (IBGE)", "norma": "Cadastro Central de Empresas", "rec": "Anual", "recFam": "Anual", "ref": "Ano-base 2024", "prox": "2027-05-31", "orgao": "IBGE"}, {"fonte": "Desemprego - PNAD Contínua (IBGE)", "norma": "PNAD Contínua trimestral", "rec": "Trimestral", "recFam": "Trimestral", "ref": "1º trimestre/2026", "prox": "2026-08-15", "orgao": "IBGE"}, {"fonte": "Emprego formal - Novo CAGED (MTE)", "norma": "Ministério do Trabalho e Emprego", "rec": "Mensal", "recFam": "Mensal", "ref": "Competência mai/2026", "prox": "2026-08-15", "orgao": "MTE"}, {"fonte": "População estimada (IBGE Cidades)", "norma": "Estimativas populacionais", "rec": "Anual (divulgação ago/set)", "recFam": "Anual", "ref": "Estimativa 2025", "prox": "2026-09-15", "orgao": "IBGE"}, {"fonte": "IDEB (INEP)", "norma": "Índice de Desenv. da Educação Básica", "rec": "Bienal (anos ímpares, divulgação no ano seguinte)", "recFam": "Bienal", "ref": "IDEB 2023", "prox": "2026-09-30", "orgao": "INEP"}, {"fonte": "PIB dos Municípios (IBGE)", "norma": "Contas municipais", "rec": "Anual (defasagem de 2 anos)", "recFam": "Anual", "ref": "Ano-base 2023", "prox": "2026-12-15", "orgao": "IBGE"}, {"fonte": "Finanças municipais - receitas/despesas", "norma": "Siconfi (Tesouro Nacional)", "rec": "Anual", "recFam": "Anual", "ref": "Exercício 2024", "prox": "2027-04-30", "orgao": "Tesouro"}, {"fonte": "Mortalidade infantil e saúde (DataSUS)", "norma": "SIM/SINASC - Ministério da Saúde", "rec": "Anual", "recFam": "Anual", "ref": "Ano-base 2023", "prox": "2026-12-15", "orgao": "DataSUS"}, {"fonte": "Acervo Judicial - DataJud (CNJ)", "norma": "Res. CNJ 331/2020 - API pública", "rec": "Mensal (alimentação pelos tribunais)", "recFam": "Mensal", "ref": "Consulta de 17/07/2026", "prox": "2026-10-17", "orgao": "CNJ"}, {"fonte": "Saúde - CNES (rede física)", "norma": "Ministério da Saúde - API dados abertos", "rec": "Contínua (consulta trimestral sugerida)", "recFam": "Trimestral", "ref": "Consulta de 17/07/2026", "prox": "2026-10-17", "orgao": "DataSUS"}, {"fonte": "Saúde - Violência notificada (SINAN/VIVA)", "norma": "Lei 10.778/2003 - notificação compulsória", "rec": "Anual (TabNet; dados sujeitos a revisão)", "recFam": "Anual", "ref": "2022-2025 (parcial)", "prox": "2027-03-31", "orgao": "DataSUS"}, {"fonte": "Saúde - Nascidos vivos (SINASC)", "norma": "TabNet/DataSUS", "rec": "Anual", "recFam": "Anual", "ref": "Ano-base 2024", "prox": "2027-03-31", "orgao": "DataSUS"}, {"fonte": "Saúde - Mortalidade por causas externas (SIM)", "norma": "TabNet/DataSUS", "rec": "Anual", "recFam": "Anual", "ref": "2022-2024", "prox": "2027-03-31", "orgao": "DataSUS"}, {"fonte": "Saúde - Internações causas externas (SIH)", "norma": "TabNet/DataSUS", "rec": "Mensal", "recFam": "Mensal", "ref": "até mai/2026", "prox": "2026-10-17", "orgao": "DataSUS"}, {"fonte": "IBGE - Censo Demográfico 2022", "norma": "Censo Demográfico / SIDRA", "rec": "Decenal (tabulações novas ao longo do ciclo)", "recFam": "Decenal", "ref": "Censo 2022", "prox": "2027-07-01", "orgao": "IBGE"}];
+const MANUAL = [{"h": "1. O que é o IndicadorMP", "p": "O IndicadorMP é o painel de inteligência de dados da Corregedoria-Geral do Ministério Público do Estado do Amapá. Em um único arquivo que abre no navegador, ele reúne duas grandes camadas: <b>as inspeções e visitas técnicas do MP-AP</b>, realizadas com base nas Resoluções e Recomendações do CNMP, e o <b>retrato dos 16 municípios do Estado</b>, construído a partir de mais de trinta fontes oficiais - IBGE (Censo 2022, CEMPRE, PNAD), INEP (Censo Escolar e IDEB), MDS (Censo SUAS, Bolsa Família, CadÚnico e BPC), DataSUS, DataJud (CNJ), Novo CAGED (MTE), Anuário Brasileiro de Segurança Pública, Atlas da Violência e Radar da Transparência Pública (PNTP)."}, {"h": "2. A coluna lateral", "p": "<b>Início</b> - esta apresentação. <b>Indicadores</b> - os painéis organizados por áreas temáticas de atuação: <b>Criança e Adolescente</b> (Conselho Tutelar, LA/PSC, acolhimentos e conselhos de direitos), <b>Idoso</b> (ILPIs), <b>Educação</b> (Censo Escolar), <b>Assistência Social</b> (os doze painéis do Censo SUAS e o Bolsa Família/CadÚnico), <b>Sistema de Justiça Criminal</b> (prisionais, militares, delegacias e criminalidade), <b>Perícia</b> (polícia científica e medicina legal), <b>Poder Judiciário</b> (acervo do TJAP no DataJud, com consultas de improbidade, ACP, ação penal e ANPP), <b>Transparência</b> (Radar PNTP) e <b>IBGE</b> (o retrato demográfico e socioeconômico municipal). <b>Relatórios</b> - os documentos consolidados do Estado. <b>Documentação</b> - este manual e o Painel de Alerta com o calendário de atualização das fontes."}, {"h": "3. As páginas de cada painel", "p": "Os painéis seguem um desenho comum. <b>Sobre</b> - o que é o eixo e como ler os indicadores. <b>Indicadores</b> - o quadro de mapeamento: cada indicador, sua severidade (Alta, Média ou Atenção), a origem no formulário oficial e o fundamento legal, com a <b>trilha resolutiva</b> sugerida (da instauração à ACP). <b>Amapá</b> - os KPIs do ciclo e o Ranking de Não Conformidade: clique em uma unidade para abrir a planilha das não conformidades. <b>Consulta</b> - nos painéis com muitas unidades (escolas, CRAS, processos judiciais), filtros por município, situação e busca livre. <b>Evolução</b> - nos eixos com dois ciclos, o comparativo unidade a unidade (sanadas, persistentes e novas). <b>Relatórios</b> - os documentos para impressão."}, {"h": "4. Severidade e score", "p": "Cada não conformidade recebe uma severidade: <b>Alta</b> (violação grave de direito ou risco atual), <b>Média</b> (comprometimento relevante do serviço) ou <b>Atenção</b> (fragilidade a corrigir). O <b>score</b> da unidade soma os pesos das não conformidades - quanto maior, pior a situação. Nos painéis de fontes censitárias (SUAS, INEP), os apontamentos decorrem de regras objetivas aplicadas aos microdados oficiais e valem como triagem, não como constatação presencial."}, {"h": "5. A aba Relatórios", "p": "Três documentos prontos para uso institucional: o <b>Relatório de Avaliação</b> por Promotoria de Justiça - avaliativo e propositivo, com a análise por unidade, a posição no cenário estadual e o <b>contexto municipal</b> das novas fontes integradas; o <b>Relatório de Não Conformidades por Município</b>, com filtro por município ou consolidação estadual; e o <b>Relatório por CAO</b>, que agrupa as não conformidades pelo Centro de Apoio destinatário. Todos com botão Salvar/Imprimir em formato institucional A4."}, {"h": "6. Atualização dos dados", "p": "Cada card indica a fonte e o ano de referência dos seus dados. O <b>Painel de Alerta - Calendário de Coleta</b>, nesta aba, lista todas as fontes com a referência carregada, a data prevista da próxima coleta e o status (Em dia, Programar coleta ou Coleta vencida), calculado na abertura do painel. As inspeções CNMP seguem os ciclos das resoluções; os censos são anuais; MDS, CAGED e DataJud permitem atualização mensal ou trimestral."}, {"h": "7. Privacidade", "p": "O painel trabalha com dados públicos e agregados: estatísticas oficiais, metadados processuais e resultados de inspeção por unidade. Não contém dados nominais de crianças, vítimas ou beneficiários de programas sociais; unidades de acolhimento com endereço sigiloso aparecem sem localização."}];
+const CORES = {ok:'#1a7f37', warn:'#a97600', bad:'#b8323b'};
+const HOJE = new Date(); HOJE.setHours(12,0,0,0);
+
+function dias(prox){ const p=new Date(prox+'T12:00:00'); return Math.floor((p-HOJE)/86400000); }
+function stat(prox){ const d=dias(prox); if(d<0) return {k:'bad',t:'Coleta vencida'}; if(d<=60) return {k:'warn',t:'Programar ('+d+' d)'}; return {k:'ok',t:'Em dia'}; }
+function fmt(s){ const p=s.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; }
+DADOS.forEach(r=>{ r.dias=dias(r.prox); const s=stat(r.prox); r.st=s.k; r.stTxt=s.t; });
+
+let sortCol='dias', sortDir='asc';
+const $=id=>document.getElementById(id);
+document.getElementById('hoje').textContent=HOJE.toLocaleDateString('pt-BR');
+
+function opts(sel,campo){ const vals=[...new Set(DADOS.map(d=>d[campo]))].sort(); vals.forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; $(sel).appendChild(o); }); }
+opts('f-rec','recFam'); opts('f-org','orgao');
+
+function filtrar(){
+  const st=$('f-status').value, rc=$('f-rec').value, og=$('f-org').value, q=$('f-busca').value.toLowerCase().trim();
+  return DADOS.filter(r=>{
+    if(st && r.st!==st) return false;
+    if(rc && r.recFam!==rc) return false;
+    if(og && r.orgao!==og) return false;
+    if(q && !(r.fonte+' '+r.norma+' '+r.ref+' '+r.rec).toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function kpis(d){
+  const ok=d.filter(r=>r.st==='ok').length, wa=d.filter(r=>r.st==='warn').length, bd=d.filter(r=>r.st==='bad').length;
+  const prox=[...d].filter(r=>r.dias>=0).sort((a,b)=>a.dias-b.dias)[0];
+  const k=(cor,l,v,s)=>`<div class="kpi" style="color:${cor}"><div class="l">${l}</div><div class="v" style="color:${cor}">${v}</div><div class="s">${s}</div></div>`;
+  $('kpis').innerHTML =
+    k('#0072bc','Fontes monitoradas',d.length,(d.length===DADOS.length?'total do painel':'de '+DADOS.length+' no total'))+
+    k(CORES.ok,'Em dia',ok,(d.length?Math.round(ok/d.length*100):0)+'% das fontes filtradas')+
+    k(CORES.warn,'Programar coleta',wa,'vencem nos próximos 60 dias')+
+    k(CORES.bad,'Coleta vencida',bd,bd?'exigem atualização imediata':'nenhuma pendência')+
+    k('#0d47a1','Próxima coleta',prox?fmt(prox.prox):'-',prox?prox.fonte.slice(0,34):'sem previsão');
+}
+
+function donut(d){
+  const ok=d.filter(r=>r.st==='ok').length, wa=d.filter(r=>r.st==='warn').length, bd=d.filter(r=>r.st==='bad').length, t=d.length||1;
+  let a=0, seg=[];
+  [['ok',ok],['warn',wa],['bad',bd]].forEach(([k,n])=>{ const b=a+n/t*360; if(n) seg.push(`${CORES[k]} ${a}deg ${b}deg`); a=b; });
+  $('donut').style.background = seg.length?`conic-gradient(${seg.join(',')})`:'#e6ebf2';
+  $('dn-tot').textContent=d.length;
+  $('leg').innerHTML=[['ok','Em dia',ok],['warn','Programar coleta',wa],['bad','Coleta vencida',bd]]
+    .map(([k,l,n])=>`<div><i style="background:${CORES[k]}"></i>${l} — <b>${n}</b> <span style="color:var(--mute)">(${d.length?Math.round(n/d.length*100):0}%)</span></div>`).join('');
+}
+
+function bars(d){
+  const ordem=['Mensal','Trimestral','Semestral','Anual','Bienal','Decenal','Contínua'];
+  const g={}; d.forEach(r=>g[r.recFam]=(g[r.recFam]||0)+1);
+  const max=Math.max(1,...Object.values(g));
+  $('bars').innerHTML=ordem.filter(o=>g[o]).map(o=>{
+    const n=g[o], venc=d.filter(r=>r.recFam===o&&r.st==='bad').length;
+    const cor=venc?CORES.bad:(n/max>.6?'#0072bc':'#4a9fd8');
+    return `<div class="brow"><div class="bname">${o}</div><div class="btrack"><div class="bfill" style="width:${n/max*100}%;background:${cor}"></div></div><div class="bval">${n}</div></div>`;
+  }).join('')||'<div style="font-size:12px;color:var(--mute)">Nenhuma fonte no filtro atual.</div>';
+}
+
+function timeline(d){
+  const g={}; d.forEach(r=>{ const k=r.prox.slice(0,7); g[k]=(g[k]||0)+1; });
+  const keys=Object.keys(g).sort(); const max=Math.max(1,...Object.values(g));
+  const MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  $('tl').innerHTML=keys.map(k=>{
+    const n=g[k], venc=d.some(r=>r.prox.slice(0,7)===k && r.st==='bad');
+    const prog=d.some(r=>r.prox.slice(0,7)===k && r.st==='warn');
+    const cor=venc?CORES.bad:(prog?CORES.warn:'#0072bc');
+    return `<div class="tlc" title="${n} fonte(s) em ${k}"><div class="tv">${n}</div><div class="tlb" style="height:${Math.max(6,n/max*88)}px;background:${cor}"></div></div>`;
+  }).join('');
+  $('tl-lbl').innerHTML=keys.map(k=>{ const [y,m]=k.split('-'); return `<div style="flex:1;text-align:center;font-size:9px;color:var(--mute)">${MES[+m-1]}<br>${y.slice(2)}</div>`; }).join('');
+}
+
+function tabela(d){
+  const arr=[...d].sort((a,b)=>{
+    let x=a[sortCol], y=b[sortCol];
+    if(sortCol==='dias'){ x=a.dias; y=b.dias; }
+    const c = x<y?-1 : x>y?1 : 0;
+    return sortDir==='asc'?c:-c;
+  });
+  $('tbl').querySelector('tbody').innerHTML=arr.map(r=>`<tr>
+    <td><b>${r.fonte}</b><div style="font-size:10px;color:var(--mute);margin-top:2px">${r.orgao}</div></td>
+    <td style="color:var(--sub)">${r.norma}</td>
+    <td><span class="tag">${r.recFam}</span></td>
+    <td style="color:var(--sub)">${r.ref}</td>
+    <td style="white-space:nowrap">${fmt(r.prox)}</td>
+    <td><span class="bdg ${r.st}">${r.stTxt}</span></td></tr>`).join('')
+    || '<tr><td colspan="6" style="text-align:center;color:var(--mute);padding:22px">Nenhuma fonte encontrada com os filtros atuais.</td></tr>';
+  $('tbl-count').textContent='· '+arr.length+' fonte(s)';
+  $('tbl').querySelectorAll('th').forEach(th=>{
+    const c=th.dataset.c;
+    th.textContent=th.textContent.replace(/ [▲▼]$/,'')+(c===sortCol?(sortDir==='asc'?' ▲':' ▼'):'');
+  });
+}
+
+function render(){ const d=filtrar(); kpis(d); donut(d); bars(d); timeline(d); tabela(d); }
+['f-status','f-rec','f-org'].forEach(i=>$(i).addEventListener('change',render));
+$('f-busca').addEventListener('input',render);
+$('tbl').querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
+  const c=th.dataset.c;
+  if(sortCol===c) sortDir=sortDir==='asc'?'desc':'asc'; else { sortCol=c; sortDir='asc'; }
+  render();
+}));
+$('manual').innerHTML=MANUAL.map((s,i)=>`<details class="man"${i===0?' open':''}><summary>${s.h}</summary><div class="body">${s.p}</div></details>`).join('');
+render();
+</script>
+</body>
+</html>

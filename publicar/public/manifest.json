@@ -1,0 +1,16 @@
+{
+  "name": "IndicadorMP — Corregedoria-Geral do MP-AP",
+  "short_name": "IndicadorMP",
+  "description": "Painel de inteligência de dados da Corregedoria-Geral do Ministério Público do Estado do Amapá",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f8fc",
+  "theme_color": "#005B96",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

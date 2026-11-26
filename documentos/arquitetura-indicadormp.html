@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IndicadorMP - Arquitetura do Sistema</title>
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;max-width:1200px;margin:0 auto;padding:20px;color:#1a2a3a;background:#f6f8fb;}
+  h1{background:linear-gradient(135deg,#0072bc 0%,#00548a 100%);color:#fff;padding:28px 32px;border-radius:14px;font-size:26px;}
+  h1 small{display:block;font-weight:400;font-size:14px;opacity:.85;margin-top:6px;}
+  h2{color:#00548a;border-bottom:3px solid #0072bc;padding-bottom:8px;margin-top:44px;}
+  .section{margin:26px 0;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
+  .card{background:#fff;border:1px solid rgba(0,40,80,.1);border-radius:12px;padding:16px 18px;box-shadow:0 4px 14px rgba(20,50,90,.06);}
+  .card h3{margin:0 0 8px;font-size:14px;color:#0d47a1;text-transform:uppercase;letter-spacing:.6px;}
+  .card p, .card li{font-size:13.5px;color:#44586a;line-height:1.6;margin:0;}
+  .card ul{margin:0;padding-left:18px;}
+  svg{max-width:100%;background:#fff;border-radius:12px;border:1px solid rgba(0,40,80,.1);}
+  .tag{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px;margin:2px 3px 2px 0;}
+  .t-azul{background:#e3f0fb;color:#0d47a1;} .t-lar{background:#fdeede;color:#b35b00;}
+  .t-verde{background:#e3f5ea;color:#1d6b3c;} .t-roxo{background:#f0e8fa;color:#5e35a1;}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:13px;}
+  th{background:#eaf2f8;text-align:left;padding:9px 12px;color:#33475b;font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+  td{padding:9px 12px;border-top:1px solid rgba(0,40,80,.07);color:#44586a;}
+  code{background:#eef3f8;border-radius:6px;padding:2px 6px;font-size:12px;color:#0d47a1;}
+  .legend{font-size:12px;color:#5a7080;margin-top:8px;}
+</style>
+</head>
+<body>
+
+<h1>IndicadorMP - Arquitetura do Sistema
+<small>Painel de fiscalização e inteligência de dados da Corregedoria-Geral do MP-AP · arquivo único, offline · atualizado em 17/07/2026</small></h1>
+
+<div class="section">
+<h2>1. Contexto de negócio</h2>
+<div class="grid">
+  <div class="card"><h3>Objetivo</h3><p>Consolidar, em um único arquivo HTML offline, o diagnóstico das inspeções do MP-AP (10 eixos CNMP) e o contexto socioeconômico, judicial e de saúde dos 16 municípios do Amapá, orientando a atuação resolutiva.</p></div>
+  <div class="card"><h3>Usuários</h3><p>Corregedoria-Geral, Promotores de Justiça, Centros de Apoio Operacional (CAOs) e gestão superior do MP-AP.</p></div>
+  <div class="card"><h3>Valor</h3><p>Transforma desconformidades em pessoas atingidas (denominadores demográficos), mede resolutividade (esforço × impacto) e gera relatórios prontos por Promotoria, município e CAO.</p></div>
+  <div class="card"><h3>Números</h3><p><b>32 fontes</b> de dados · <b>~30 painéis</b> · <b>16 municípios</b> · <b>12 comarcas</b> · relatórios de avaliação com contexto municipal integrado · ~15,6 MB.</p></div>
+</div>
+</div>
+
+<div class="section">
+<h2>2. Fluxo de dados</h2>
+<svg viewBox="0 0 1160 560" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#66788a"/></marker></defs>
+  <text x="105" y="30" font-size="13" font-weight="700" fill="#0d47a1">FONTES (32)</text>
+  <g font-size="11" fill="#fff">
+    <rect x="30" y="45"  width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="66" font-weight="700">Inspeções CNMP</text><text x="40" y="82">Res. 204, 293, 277, 279, 154, 119</text>
+    <rect x="30" y="105" width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="126" font-weight="700">IBGE</text><text x="40" y="142">SIDRA (Censo 2022) · CEMPRE · PNAD</text>
+    <rect x="30" y="165" width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="186" font-weight="700">MDS / SAGI</text><text x="40" y="202">Bolsa Família · CadÚnico · BPC · Censo SUAS</text>
+    <rect x="30" y="225" width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="246" font-weight="700">DataSUS (TabNet + API)</text><text x="40" y="262">CNES · SINAN · SINASC · SIM · SIH</text>
+    <rect x="30" y="285" width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="306" font-weight="700">CNJ - DataJud</text><text x="40" y="322">API pública Elasticsearch (TJAP)</text>
+    <rect x="30" y="345" width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="366" font-weight="700">Trabalho e economia</text><text x="40" y="382">Novo CAGED (Ipeadata) · Siconfi · PIB</text>
+    <rect x="30" y="405" width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="426" font-weight="700">Segurança e educação</text><text x="40" y="442">Anuário FBSP · Atlas Ipea · Censo Escolar</text>
+    <rect x="30" y="465" width="200" height="52" rx="8" fill="#4299e1"/><text x="40" y="486" font-weight="700">Transparência</text><text x="40" y="502">Radar PNTP / Atricon (xlsx)</text>
+  </g>
+
+  <text x="340" y="30" font-size="13" font-weight="700" fill="#b35b00">EXTRAÇÃO E CÁLCULO</text>
+  <g font-size="11" fill="#fff">
+    <rect x="310" y="90"  width="220" height="60" rx="8" fill="#ed8936"/><text x="322" y="112" font-weight="700">Extratores Python</text><text x="322" y="128">atualizar_datajud.py · calc_*.py</text><text x="322" y="142">patch_*.py (scratchpad)</text>
+    <rect x="310" y="180" width="220" height="60" rx="8" fill="#ed8936"/><text x="322" y="202" font-weight="700">Scraping TabNet</text><text x="322" y="218">POST tabcgi.exe + parser</text><text x="322" y="232">(TBODY sem fechamento)</text>
+    <rect x="310" y="270" width="220" height="60" rx="8" fill="#ed8936"/><text x="322" y="292" font-weight="700">Caches JSON</text><text x="322" y="308">/tmp/*_ap.json · ibge_* · sinan_*</text><text x="322" y="322">datajud_ap · caged_ap · cnes_ap</text>
+    <rect x="310" y="360" width="220" height="60" rx="8" fill="#ed8936"/><text x="322" y="382" font-weight="700">Regras de severidade</text><text x="322" y="398">Alta · Média · Atenção</text><text x="322" y="412">fundamento legal por indicador</text>
+  </g>
+
+  <text x="640" y="30" font-size="13" font-weight="700" fill="#5e35a1">MONTAGEM</text>
+  <g font-size="11" fill="#fff">
+    <rect x="610" y="140" width="220" height="76" rx="8" fill="#9f7aea"/><text x="622" y="164" font-weight="700">Base de edição</text><text x="622" y="180">dashboard_la_psc_amapa_32.html</text><text x="622" y="194">host + 10 templates iframe</text><text x="622" y="208">JS: __setupRel · __IDX · trilhas</text>
+    <rect x="610" y="250" width="220" height="60" rx="8" fill="#9f7aea"/><text x="622" y="272" font-weight="700">gerar_visual.py</text><text x="622" y="288">injeta CSS Liquid Glass</text><text x="622" y="302">em 13 &lt;head&gt; (host + templates)</text>
+  </g>
+
+  <text x="920" y="30" font-size="13" font-weight="700" fill="#1d6b3c">PRODUTOS</text>
+  <g font-size="11" fill="#fff">
+    <rect x="890" y="120" width="230" height="66" rx="8" fill="#48bb78"/><text x="902" y="144" font-weight="700">Painel oficial</text><text x="902" y="160">indicadormp.html</text><text x="902" y="174">offline · duplo clique · ~15,6 MB</text>
+    <rect x="890" y="220" width="230" height="66" rx="8" fill="#48bb78"/><text x="902" y="244" font-weight="700">Relatórios integrados</text><text x="902" y="260">Avaliação por Promotoria · NC por</text><text x="902" y="274">Município · CAO · impressão A4</text>
+    <rect x="890" y="320" width="230" height="66" rx="8" fill="#48bb78"/><text x="902" y="344" font-weight="700">Relatórios externos DOCX</text><text x="902" y="360">Inteligência municipal (docx-js)</text><text x="902" y="374">Calçoene v6 · glossário · anexos</text>
+  </g>
+
+  <g stroke="#66788a" stroke-width="2" fill="none">
+    <path d="M230,120 L310,120" marker-end="url(#arr)"/>
+    <path d="M230,210 L310,210" marker-end="url(#arr)"/>
+    <path d="M230,300 L310,300" marker-end="url(#arr)"/>
+    <path d="M230,390 L310,390" marker-end="url(#arr)"/>
+    <path d="M530,180 L610,180" marker-end="url(#arr)"/>
+    <path d="M530,300 L610,280" marker-end="url(#arr)"/>
+    <path d="M830,178 L890,155" marker-end="url(#arr)"/>
+    <path d="M830,280 L890,253" marker-end="url(#arr)"/>
+    <path d="M830,290 L890,350" marker-end="url(#arr)"/>
+  </g>
+</svg>
+<p class="legend">Azul = fontes externas · Laranja = extração/cálculo (Python) · Roxo = montagem do HTML · Verde = produtos entregues.</p>
+</div>
+
+<div class="section">
+<h2>3. Pipeline de atualização</h2>
+<svg viewBox="0 0 1160 130" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#66788a"/></marker></defs>
+  <g font-size="11.5" fill="#fff">
+    <rect x="10"  y="35" width="200" height="60" rx="8" fill="#ed8936"/><text x="22" y="58" font-weight="700">1. Coletar</text><text x="22" y="75">APIs / TabNet / xlsx / PDF</text>
+    <rect x="245" y="35" width="200" height="60" rx="8" fill="#ed8936"/><text x="257" y="58" font-weight="700">2. Calcular e classificar</text><text x="257" y="75">indicadores + severidade</text>
+    <rect x="480" y="35" width="200" height="60" rx="8" fill="#9f7aea"/><text x="492" y="58" font-weight="700">3. Regravar a base</text><text x="492" y="75">seções/cards no HTML</text>
+    <rect x="715" y="35" width="200" height="60" rx="8" fill="#9f7aea"/><text x="727" y="58" font-weight="700">4. gerar_visual.py</text><text x="727" y="75">Liquid Glass no oficial</text>
+    <rect x="950" y="35" width="200" height="60" rx="8" fill="#48bb78"/><text x="962" y="58" font-weight="700">5. Verificar e datar</text><text x="962" y="75">browser + Painel de Alerta</text>
+  </g>
+  <g stroke="#66788a" stroke-width="2" fill="none">
+    <path d="M210,65 L245,65" marker-end="url(#arr2)"/><path d="M445,65 L480,65" marker-end="url(#arr2)"/>
+    <path d="M680,65 L715,65" marker-end="url(#arr2)"/><path d="M915,65 L950,65" marker-end="url(#arr2)"/>
+  </g>
+</svg>
+</div>
+
+<div class="section">
+<h2>4. Camadas do sistema</h2>
+<table>
+<tr><th>Camada</th><th>Componentes</th><th>Tecnologia</th></tr>
+<tr><td><b>Dados</b></td><td>32 fontes externas (calendário no Painel de Alerta) e caches locais <code>/tmp/*_ap.json</code></td><td>APIs REST/Elasticsearch, TabNet (POST), xlsx/CSV/PDF</td></tr>
+<tr><td><b>Extração</b></td><td><code>atualizar_datajud.py</code> (regenerável, com retry/backoff), extratores IBGE/MDS/TabNet, calculadoras de indicadores (calc_*.py)</td><td>Python 3 (urllib, sem dependências)</td></tr>
+<tr><td><b>Aplicação</b></td><td>Host HTML (~20 painéis nativos) + 10 painéis CNMP em <code>&lt;template&gt;</code>/iframe; infra JS: <code>__setupRel</code>, <code>__setupConsulta</code>, trilhas resolutivas, <code>__IDX</code> (IA), consultas filtráveis com dados embutidos</td><td>HTML + CSS + JS puro (sem frameworks)</td></tr>
+<tr><td><b>Apresentação</b></td><td><code>gerar_visual.py</code> injeta o tema Liquid Glass (vidro, pílulas, stat-cards) em todos os heads; impressão limpa preservada</td><td>CSS injetado (id <code>liquid-glass</code>)</td></tr>
+<tr><td><b>IA (opcional)</b></td><td>Aba Inteligência de Dados (oculta): relatório municipal via Gemini/Claude/GPT/offline, config no card da Documentação</td><td>fetch às APIs dos provedores, chave no localStorage</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>5. Funcionalidades</h2>
+<div class="grid">
+  <div class="card"><h3>Funcionais</h3><ul>
+    <li>Ranking de não conformidade por unidade, com severidade e fundamento legal</li>
+    <li>Trilhas resolutivas em 6 fases (Instauração → TAC → ACP)</li>
+    <li>Relatórios por Promotoria (com contexto municipal 4.1), Município e CAO</li>
+    <li>Consultas filtráveis: escolas, CRAS, processos judiciais (5 classes + ANPP)</li>
+    <li>Evolução entre ciclos de inspeção (sanadas / persistentes / novas)</li>
+    <li>Painel de Alerta com calendário das 32 fontes</li></ul></div>
+  <div class="card"><h3>Não funcionais</h3><ul>
+    <li>Arquivo único offline - roda com duplo clique, sem servidor</li>
+    <li>Sem dependências externas em runtime (dados embutidos)</li>
+    <li>Impressão A4 institucional com cabeçalho e logo</li>
+    <li>Atualização reprodutível por script, com data carimbada</li>
+    <li>Privacidade: metadados públicos; sem dados nominais de pessoas</li></ul></div>
+  <div class="card"><h3>Fontes por família</h3>
+    <p><span class="tag t-azul">CNMP ×10</span><span class="tag t-azul">IBGE ×5</span><span class="tag t-azul">MDS/SUAS ×3</span><span class="tag t-azul">DataSUS ×5</span><span class="tag t-azul">CNJ ×1</span><span class="tag t-azul">MTE ×1</span><span class="tag t-azul">INEP ×2</span><span class="tag t-azul">FBSP/Ipea ×2</span><span class="tag t-azul">Atricon ×1</span><span class="tag t-azul">Tesouro ×1</span><span class="tag t-azul">outros</span></p></div>
+</div>
+</div>
+
+<div class="section">
+<h2>6. Implantação e manutenção</h2>
+<div class="grid">
+  <div class="card"><h3>Local definitivo</h3><p><code>~/Documents/Projetos/IndicadorMP/</code><br>· <b>indicadormp.html</b> (oficial)<br>· dashboard_la_psc_amapa_32.html (base de edição)<br>· gerar_visual.py · atualizar_datajud.py<br>· relatórios DOCX e este diagrama</p></div>
+  <div class="card"><h3>Rotina de atualização</h3><p>1. Consultar o <b>Painel de Alerta</b> (Documentação) para ver o que venceu.<br>2. Rodar <code>python3 atualizar_datajud.py</code> (DataJud completo, ~10 min).<br>3. Demais fontes: reexecutar o extrator correspondente e <code>gerar_visual.py</code>.</p></div>
+  <div class="card"><h3>Pré-requisitos</h3><p>Python 3 (sem pacotes extras) e internet apenas no momento da coleta. O painel final funciona 100% offline. Chave pública do DataJud: datajud-wiki.cnj.jus.br (rotativa).</p></div>
+  <div class="card"><h3>Pendências conhecidas</h3><p>Cobertura vacinal (PNI) e cobertura ESF (e-Gestor): sem API/TabNet - exigem download manual. Sigilosos (infância) ausentes do DataJud público.</p></div>
+</div>
+</div>
+
+<p class="legend" style="margin-top:36px;">IndicadorMP · Corregedoria-Geral do Ministério Público do Estado do Amapá · documento de arquitetura gerado em 17/07/2026.</p>
+</body>
+</html>
